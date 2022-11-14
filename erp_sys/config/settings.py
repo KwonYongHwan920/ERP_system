@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os, json
+from pytz import common_timezones
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 
 # Quick-start development settings - unsuitable for production
@@ -21,6 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-)=^=%suuokb#4jw+n=#_&og)g&%vb2xr$y$eg63q5ag7$a+od&'
+secret_file = os.path.join(BASE_DIR, 'secret.json')
+with open(secret_file) as f:
+    secret = json.loads(f.read())
+def get_secret(setting, secret=secret):
+    try:
+        return secret[setting]
+    except KeyError:
+        raise ImproperlyConfigured(error_msg)
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'home.apps.HomeConfig',
+    'django.contrib.humanize',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +70,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+                TEMPLATES_DIR,
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,11 +121,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONES = [(tz, tz) for tz in common_timezones]
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -116,8 +137,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+                    os.path.join(BASE_DIR, 'statics'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_REDIRECT_URL = '/home'
+LOGOUT_REDIRECT_URL = '/'
