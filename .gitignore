@@ -4,6 +4,10 @@
 #no secret.json files
 *secret.json
 
+#no config files
+config/
+home/migrations
+
 ### Django ###
 *.log
 *.pot
