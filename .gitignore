@@ -6,7 +6,7 @@
 
 #no config files
 config/
-home/migrations/
+migrations/
 
 ### Django ###
 *.log
