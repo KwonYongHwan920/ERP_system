@@ -11,32 +11,33 @@
     <body>
         <div id="container">
             <div id="header">
-                <h2>Header-logo</h2>
-                    <div class="logo">
+                <div class="logo">
             <a href="{% url 'welcome' %}"><img src="{% static 'img/erp-system.jpg' %}" width="140" height="38"></a>
         </div>
-        <h2>----logo----</h2></br>
-
-        <h2>Header-login/signup</h2>
             <div class="h-item">
                 <a href="{% url 'login' %}"><input type="submit" value="LogIn"></a>
                 <a href="{% url 'signup' %}"><input type="submit" value="SignUp"></a>
             </div>
-        <h2>----login/signup----</h2></br>
         </div>
 
         <div id="m-content">
-            <h2>main_body</h2>
-            <h2>ERP</h2>
-            <h2>----main----</h2></br>
+            <div class="m-body">
+                <h2>main_body</h2>
+                <h2>ERP</h2>
+                <h2>----main----</h2></br>
+            </div>
         </div>
 
         <div id="s-content">
-            <h2>sub_body</h2>
-            <h3>서브 바디</h3>
-            <h2>----sub-end----</h2></br>
+            <div class="s-body">
+                <h2>signup form</h2>
+                
+                {% block form %}
+            
+                {% endblock form %}
+                    
         </div>
-
+        
         <div id="footer">
             <p>안양대학교 컴퓨터공학과 권용환</p>
         </div>

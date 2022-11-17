@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def signup(request):
@@ -13,5 +15,7 @@ def signup(request):
         return redirect('/')
     return render(request, 'signup.html')
 
+@login_required
 def welcome_home(request):
-	return HttpResponse("HttpResponse : /home/templates/welcome_home.html.")
+	# return HttpResponse("HttpResponse : /home/templates/welcome_home.html.")
+	return render(request, 'welcome_home.html')

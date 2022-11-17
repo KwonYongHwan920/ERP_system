@@ -1,0 +1,50 @@
+{% extends 'welcome.html' %} {% block logform %}
+
+<div id="s-content">
+  <div>
+    <form method="POST" class="post-form">
+      {% csrf_token %} {% include "form_errors.html" %}
+      <div>
+        <label for="username">User-ID</label><br />
+        <input
+          type="text"
+          name="username"
+          id="username"
+          value="{{ form.username.value|default_if_none:'' }}"
+        />
+      </div>
+      <div>
+        <label for="password1">Password</label><br />
+        <input
+          type="password"
+          name="password1"
+          id="password1"
+          value="{{ form.password1.value|default_if_none:'' }}"
+        />
+      </div>
+      <div>
+        <label for="password2">Password Confirm</label><br />
+        <input
+          type="password"
+          name="password2"
+          id="password2"
+          value="{{ form.password2.value|default_if_none:'' }}"
+        />
+      </div>
+      <div>
+        <label for="email">E-mail</label><br />
+        <input
+          type="text"
+          name="email"
+          id="email"
+        value="{{ form.email.value|default_if_none:'' }}"
+        />
+      </div>
+      <a href="{% url 'signup_waiting' %}"
+        ><button type="submit">Create</button></a
+      >
+    </form>
+  </div>
+</div>
+
+{% endblock %}
