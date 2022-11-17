@@ -37,7 +37,7 @@
           type="text"
           name="email"
           id="email"
-        value="{{ form.email.value|default_if_none:'' }}"
+          value="{{ form.email.value|default_if_none:'' }}"
         />
       </div>
       <a href="{% url 'signup_waiting' %}"
