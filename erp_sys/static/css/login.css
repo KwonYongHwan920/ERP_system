@@ -1,0 +1,67 @@
+.login {
+  width: 600px;
+  background-color: rgb(9, 105, 127);
+  border-radius: 5px;
+  padding: 25px;
+  box-sizing: border-box;
+
+  position: relative;
+}
+.login span {
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+}
+.login input[type="email"],
+.login input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: 0.3s;
+  padding-left: 50px;
+}
+.login input[type="email"]:hover,
+.login input[type="password"]:hover {
+  border: 1px solid dodgerblue;
+  box-shadow: 0 0 5px dodgerblue;
+}
+
+.login input[type="email"]::placeholder,
+.login input[type="password"]::placeholder {
+  opacity: 1;
+  transition: 0.3;
+}
+.login input[type="email"]:focus::placeholder,
+.login input[type="password"]:focus::placeholder {
+  visibility: hidden;
+  opacity: 0;
+}
+.login p {
+  overflow: hidden;
+}
+.login p label {
+  float: left;
+  cursor: pointer;
+}
+.login p a {
+  float: right;
+}
+.login p a:hover {
+  text-decoration: underline;
+}
+.login button {
+  background-color: #2991b1;
+  color: #fff;
+  width: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  transition: 0.3s;
+}
+.login button:hover {
+  background-color: #2c778e;
+}

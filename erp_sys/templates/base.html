@@ -1,47 +1,78 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>{% block title %}{{ section.title }}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="{% static 'css/style_mysite.css' %}" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/gnb.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/login.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/content.css' %}" />
+    <link rel="stylesheet" src="{% static '/css/grid.css' $}" />
   </head>
 
   <body>
-    <div id="container">
-      <div id="header">
-        <div class="logo">
-          <a href="{% url 'welcome' %}"
-            ><img
-              src="{% static 'img/logo_w_persona.png' %}"
-              width="140"
-              height="38"
-          /></a>
-        </div>
-        <div class="h-item">
-          {% if user.is_authenticated %}
-          <a href="{% url 'logout' %}"
-            ><input type="submit" value="{{ user.username }} (Logout)"
-          /></a>
-          {% else %}
-          <a href="{% url 'login' %}"><input type="submit" value="Login" /></a>
-          {% endif %}
-        </div>
-        <div class="search-item">
-          <input type="search" name="q" placeholder="Search query" />
-          <input type="submit" value="Go!" />
-        </div>
+    <div class="container">
+      <div class="imgDiv">
+        <img
+          class="ERP-img"
+          src="/static/img/erp-system.png"
+          alt="ERP-system"
+        />
       </div>
 
-      <!-- Main block -->
-      <div id="m-content">{% block content1 %} {% endblock %}</div>
-
-      <!-- Sub block -->
-      <div id="s-content">{% block content2 %} {% endblock %}</div>
-
-      <div id="footer">
-        <p>안양대학교 컴퓨터공학과 권용환</p>
+      <div class="loginDiv">
+        <form class="login" id="form">
+          <span>Email</span>
+          <input type="email" placeholder="Email Address" />
+          <span>Password</span>
+          <input type="password" placeholder="Password" />
+          <p>
+            <label> <input type="checkbox" />Keep me logged in </label>
+            <a href="#noe" class="btn-forgot">Forgot Your Password?</a>
+          </p>
+          <button>Log in</button>
+        </form>
+      </div>
+      <div class="gnb">
+        <a href="#none">
+          <span>재무</span>
+          <span>재무</span>
+        </a>
+        <a href="#none">
+          <span>HR 관리</span>
+          <span>HR 관리</span>
+        </a>
+        <a href="#none">
+          <span>소싱/조달</span>
+          <span>소싱/조달</span>
+        </a>
+        <a href="#none">
+          <span>판매</span>
+          <span>판매</span>
+        </a>
+        <a href="#none">
+          <span>제조</span>
+          <span>제조</span>
+        </a>
+        <a href="#none">
+          <span>R&D</span>
+          <span>R&D</span>
+        </a>
+        <a href="#none">
+          <span>서비스</span>
+          <span>서비스</span>
+        </a>
+        <a href="#none">
+          <span>자산관리</span>
+          <span>자산관리</span>
+        </a>
+      </div>
+      <div class="content">
+        <div id="mainContent"></div>
+        <div id="subContent"></div>
       </div>
     </div>
   </body>

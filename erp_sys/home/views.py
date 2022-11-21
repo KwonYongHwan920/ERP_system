@@ -16,6 +16,5 @@ def signup(request):
     return render(request, 'signup.html')
 
 @login_required
-def welcome_home(request):
-	# return HttpResponse("HttpResponse : /home/templates/welcome_home.html.")
+def welcome_home(request):# return HttpResponse("HttpResponse : /home/templates/welcome_home.html.")
 	return render(request, 'welcome_home.html')

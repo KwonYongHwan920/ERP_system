@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swp');
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: rgb(9, 105, 127);
+}
+
+a {
+  text-decoration: none;
+  color: #222
+}
+
+.ERP-img {
+  height: 300px;
+}

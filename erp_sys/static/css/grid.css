@@ -1,0 +1,24 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  grid-template-areas:
+    "hd1 hd1 hd1 . . .  hd2   hd2   hd2"
+    "main main main main main main main main main"
+    "ft ft ft ft   ft   ft   ft   ft   ft";
+}
+
+.loginDiv {
+  grid-area: hd2;
+}
+
+.imgDiv {
+  grid-area: hd1;
+}
+
+.gnb {
+  grid-area: main;
+}
+.content {
+  grid-area: ft;
+}
