@@ -258,3 +258,47 @@ def insert_client(query):
     cur.execute(sql, query)
     conn.commit()
     conn.close()
+    
+############################################## 입출고 현황 ###############################################
+def proS_view():
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "SELECT * FROM PRODUCT_S;"
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return res
+
+############################################## 발주 현황 ###############################################
+def SALES_view():
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "SELECT * FROM SALES;"
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return res
+
+############################################## 인사 현황 ###############################################
+def staff_view():
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "SELECT * FROM STAFF;"
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return res
+
+############################################## 고객 현황 ###############################################
+def clients_view():
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "SELECT * FROM CLIENTS;"
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return res

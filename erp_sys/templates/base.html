@@ -98,7 +98,144 @@
           url: "/product",
           type: "GET",
           success: function (response) {
-            alert(response.res.length);
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function productS() {
+        var ajax = $.ajax({
+          url: "/product_s",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function sales() {
+        var ajax = $.ajax({
+          url: "/sales",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function staff() {
+        var ajax = $.ajax({
+          url: "/staff",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function clients() {
+        var ajax = $.ajax({
+          url: "/clients",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
             if (response.message == "SUCCESS") {
               $("#table").empty();
               for (let i = 0; i < response.res.length; i++) {
@@ -165,27 +302,27 @@
           <span>상품 관리</span>
           <span>상품 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="productS()" id="proS">
           <span>입출고 관리</span>
           <span>입출고 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="tbList()" id="tbList">
           <span>반품 관리</span>
           <span>반품 관리</span>
         </a>
         <a href="#none">
-          <span>제고 관리</span>
-          <span>제고 관리</span>
+          <span>재고 관리</span>
+          <span>재고 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="sales()" id="sales">
           <span>발주 관리</span>
           <span>발주 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="staff()" id="staff">
           <span>인사 관리</span>
           <span>인사 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="clients()" id="clients">
           <span>고객 관리</span>
           <span>고객 관리</span>
         </a>

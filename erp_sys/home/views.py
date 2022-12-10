@@ -56,7 +56,7 @@ def pro_ins(request):
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
         except: return JsonResponse({'message':'DB_ERR'},status=400)
 
-################################################ 반품 현황 ##################################################
+################################################ 재무 현황 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
 def finance(request):
@@ -66,12 +66,52 @@ def finance(request):
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
     
-################################################ 반품 현황 ##################################################
+################################################ 상품 현황 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
 def pro_view(request):
     try:
         res = models.pro_view()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 입출고 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def proS_view(request):
+    try:
+        res = models.proS_view()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 입출고 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def sales_view(request):
+    try:
+        res = models.SALES_view()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 입출고 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def staff_view(request):
+    try:
+        res = models.staff_view()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 입출고 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def clients_view(request):
+    try:
+        res = models.clients_view()
         # print(res)
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)

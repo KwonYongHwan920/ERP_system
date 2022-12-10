@@ -14,4 +14,8 @@ path('tbList', views.tbList),
 path('proins', views.pro_ins),
 path('finance', views.finance),
 path('product', views.pro_view),
+path('product_s', views.proS_view),
+path('sales', views.sales_view),
+path('staff', views.staff_view),
+path('clients', views.clients_view),
 ]
