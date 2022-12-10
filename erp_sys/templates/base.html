@@ -46,6 +46,90 @@
           },
         });
       }
+
+      function finance() {
+        var ajax = $.ajax({
+          url: "/finance",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][5] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][6] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][7] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function product() {
+        var ajax = $.ajax({
+          url: "/product",
+          type: "GET",
+          success: function (response) {
+            alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
     </script>
   </head>
 
@@ -73,11 +157,11 @@
         </form>
       </div>
       <div class="gnb">
-        <a onclick="tbList()" id="fin">
+        <a onclick="finance()" id="fin">
           <span>재무 관리</span>
           <span>재무 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="product()" id="pro">
           <span>상품 관리</span>
           <span>상품 관리</span>
         </a>

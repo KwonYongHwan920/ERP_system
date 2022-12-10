@@ -12,4 +12,6 @@ path('', views.welcome_home, name='welcome_home'),
 # path('logIn', views.logIn),
 path('tbList', views.tbList),
 path('proins', views.pro_ins),
+path('finance', views.finance),
+path('product', views.pro_view),
 ]

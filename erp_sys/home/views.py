@@ -55,3 +55,23 @@ def pro_ins(request):
             res = models.pro_view()
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
         except: return JsonResponse({'message':'DB_ERR'},status=400)
+
+################################################ 반품 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def finance(request):
+    try:
+        res = models.fin_manage()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 반품 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def pro_view(request):
+    try:
+        res = models.pro_view()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
