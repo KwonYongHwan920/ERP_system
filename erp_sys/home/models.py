@@ -156,6 +156,17 @@ def now_proS():
 def fin_manage():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
+    sql = "SELECT brand_name as '브랜드' , sum(product_price*pro_sum) as '총판매가격',sum(product_price*pro_sum)/10*(100-br_comm+pr_comm) as '실 수익', sum(product_price*pro_sum)/10*pr_comm as '수수료',sum(product_price*pro_sum)/10*br_comm as '브랜드 수익', brand_kind_num as '브랜드 품목 종류 갯수', if(brand_name=charge_br,sta_name,NULL) as '담당자' from product, product_s, brand, commission, staff order by '총판매가격' desc"
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return res
+
+############################################## 재무 관리 ###############################################
+def fin_manage():
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
     sql = "SELECT brand_name as '브랜드' , sum(product_price*pro_sum) as '총판매가격',sum(product_price*pro_sum)/10*1.5 as '실 수익', sum(product_price*pro_sum)/10 as '수수료',sum(product_price*pro_sum)/10*3 as '브랜드 수익', brand_kind_num as '브랜드 품목 종류 갯수', if(brand_name=charge_br,sta_name,NULL) as '담당자' from product, product_s, brand, staff order by '총판매가격' desc"
     cur.execute(sql)
     res = cur.fetchall()
@@ -178,7 +189,7 @@ def sta_upd():
 def insert_prod(query):
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "INSERT into PRODUCT (product_code,product_name,product_brand_name,product_price,product_stock) VALUES (%s,%s,%s,%s,%s);"
+    sql = "INSERT into PRODUCT (product_code,product_name,product_brand_name,product_price,product_stock) VALUES (%s,%s,%s,%d,%d);"
     cur.execute(sql, query)
     conn.commit()
     conn.close()
@@ -193,3 +204,57 @@ def pro_view():
     conn.commit()
     conn.close()
     return res
+
+############################################## 입출고 추가 ###############################################
+def insert_prod_s(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "INSERT into product_s(pro_code,pro_Stat,pro_sum)VALUES (%s,%s,%d);"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+
+############################################## 반품 추가 ###############################################
+def insert_tb(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "INSERT into take_back(tb_code,tb_name,tb_stock,tb_stat)VALUES (%s,%s,%d,%s);"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+
+############################################## 수수료 입력 ###############################################
+def insert_comm(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "INSERT into commission(br_name,br_comm,pr_comm)VALUES (%s,%d,%d);"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+
+############################################## 브랜드 등록 ###############################################
+def insert_comm(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "INSERT into brand(brand_name,brand_account,brand_tel)VALUES (%s,%s,%s);"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+
+############################################## 직원 추가 ###############################################
+def insert_staff(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "INSERT into STAFF (charge_br,Sta_pay,Sta_Att,Sta_name,Sta_Stat) VALUES (%s,%d,%d,%s,%s);"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+    
+############################################## 고객 추가 ###############################################
+def insert_client(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "INSERT into CLIENTS (clients_num, clients_name, clients_add, clients_tel, clients_note) VALUES (%s,%s,%s,%s,%s);"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()

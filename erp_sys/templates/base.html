@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +12,41 @@
     <link rel="stylesheet" href="{% static '/css/login.css' %}" />
     <link rel="stylesheet" href="{% static '/css/content.css' %}" />
     <link rel="stylesheet" href="{% static '/css/grid.css' %}" />
+    <script type="text/javascript">
+      function tbList() {
+        var ajax = $.ajax({
+          url: "/tbList",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+    </script>
   </head>
 
   <body>
@@ -37,41 +73,43 @@
         </form>
       </div>
       <div class="gnb">
-        <a href="#none">
-          <span>재무</span>
-          <span>재무</span>
+        <a onclick="tbList()" id="fin">
+          <span>재무 관리</span>
+          <span>재무 관리</span>
         </a>
         <a href="#none">
-          <span>HR 관리</span>
-          <span>HR 관리</span>
+          <span>상품 관리</span>
+          <span>상품 관리</span>
         </a>
         <a href="#none">
-          <span>소싱/조달</span>
-          <span>소싱/조달</span>
+          <span>입출고 관리</span>
+          <span>입출고 관리</span>
         </a>
         <a href="#none">
-          <span>판매</span>
-          <span>판매</span>
+          <span>반품 관리</span>
+          <span>반품 관리</span>
         </a>
         <a href="#none">
-          <span>제조</span>
-          <span>제조</span>
+          <span>제고 관리</span>
+          <span>제고 관리</span>
         </a>
         <a href="#none">
-          <span>R&D</span>
-          <span>R&D</span>
+          <span>발주 관리</span>
+          <span>발주 관리</span>
         </a>
         <a href="#none">
-          <span>서비스</span>
-          <span>서비스</span>
+          <span>인사 관리</span>
+          <span>인사 관리</span>
         </a>
         <a href="#none">
-          <span>자산관리</span>
-          <span>자산관리</span>
+          <span>고객 관리</span>
+          <span>고객 관리</span>
         </a>
       </div>
       <div class="content">
-        <div id="mainContent"></div>
+        <div id="mainContent">
+          <table id="table"></table>
+        </div>
         <div id="subContent"></div>
       </div>
     </div>

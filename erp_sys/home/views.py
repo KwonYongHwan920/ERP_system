@@ -25,13 +25,17 @@ def welcome_home(request):      # return HttpResponse("HttpResponse : /home/temp
 
 #################################################################################################################################################
 
+################################################ 반품 현황 ##################################################
+
 @method_decorator(csrf_exempt,name='dispatch')
 def tbList(request):
     try:
         res = models.now_tb()
-        print(res)
+        # print(res)
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
+
+################################################ 상품 추가 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
 def pro_ins(request):
