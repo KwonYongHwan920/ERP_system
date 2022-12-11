@@ -40,9 +40,9 @@ def tbList(request):
 @method_decorator(csrf_exempt,name='dispatch')
 def pro_ins(request):
     if (request.method == 'POST'):
+        print('test')
         
         data = json.loads(request.body)
-        
         code = data["product_code"]
         name = data["product_name"]
         brand = data["product_brand_name"]
@@ -51,8 +51,8 @@ def pro_ins(request):
     
         try:
             query = (code, name, brand, price, stock)
-            models.insert_prod(query)
-            res = models.pro_view()
+            res = models.insert_prod(query)
+            # res = models.pro_view()
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
         except: return JsonResponse({'message':'DB_ERR'},status=400)
 
@@ -62,6 +62,16 @@ def pro_ins(request):
 def finance(request):
     try:
         res = models.fin_manage()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 재무 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def pros_manage(request):
+    try:
+        res = models.proS_manage()
         # print(res)
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
@@ -86,7 +96,7 @@ def proS_view(request):
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
     
-################################################ 입출고 현황 ##################################################
+################################################ 발주 현황 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
 def sales_view(request):
@@ -96,7 +106,7 @@ def sales_view(request):
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
     
-################################################ 입출고 현황 ##################################################
+################################################ 직원 현황 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
 def staff_view(request):
@@ -106,7 +116,7 @@ def staff_view(request):
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
     
-################################################ 입출고 현황 ##################################################
+################################################ 고객 현황 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
 def clients_view(request):
@@ -115,3 +125,123 @@ def clients_view(request):
         # print(res)
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
+################################################ 입출고 추가 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def proS_ins(request):
+    if (request.method == 'POST'):
+        
+        data = json.loads(request.body)
+        
+        code = data["pro_code"]
+        Pstat = data["pro_Stat"]
+        Psum = data["pro_sum"]
+        
+        try:
+            query = (code, Pstat, Psum)
+            res = models.insert_prod_s(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 반품 추가 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def tb_ins(request):
+    if (request.method == 'POST'):
+        
+        data = json.loads(request.body)
+        
+        code = data["tb_code"]
+        name = data["tb_name"]
+        stock = data["tb_stock"]
+        tbstat = data["tb_stat"]
+        
+        try:
+            query = (code, name, stock, tbstat)
+            res = models.insert_tb(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 수수료 추가 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def comm_ins(request):
+    if (request.method == 'POST'):
+        
+        data = json.loads(request.body)
+        
+        bname = data["br_name"]
+        bcomm = data["br_comm"]
+        pcomm = data["pr_comm"]
+
+        try:
+            query = (bname, bcomm, pcomm)
+            res = models.insert_comm(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 브랜드 추가 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def br_ins(request):
+    if (request.method == 'POST'):
+        
+        data = json.loads(request.body)
+        
+        name = data["brand_name"]
+        num = data["brand_kind_num"]
+        acc = data["brand_account"]
+        tel = data["brand_tel"]
+
+        try:
+            query = (name, num, acc, tel)
+            res = models.insert_br(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 직원 추가 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def staff_ins(request):
+    if (request.method == 'POST'):
+        
+        data = json.loads(request.body)
+        
+        char = data["charge_br"]
+        pay = data["Sta_pay"]
+        att = data["Sta_Att"]
+        name = data["Sta_name"]
+        stat = data["Sta_Stat"]
+
+        try:
+            query = (char, pay, att, name, stat)
+            res = models.insert_staff(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 고객 추가 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def client_ins(request):
+    if (request.method == 'POST'):
+        
+        data = json.loads(request.body)
+        
+        num = data["clients_num"]
+        name = data["clients_name"]
+        add = data["clients_add"]
+        tel = data["clients_tel"]
+        note = data["clients_note"]
+
+        try:
+            query = (num, name, add, tel, note)
+            res = models.insert_client(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)

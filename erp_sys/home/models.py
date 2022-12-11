@@ -70,7 +70,7 @@ def UPd_brand():
 def pro_manage():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "SELECT product_name as '제품명', product_code as '제품 코드', product_price as '제품 가격', product_stock as '재고', brand_name as '브랜드명' FROM product as p right join brand as b on p.product_brand_name = b.brand_name"
+    sql = "SELECT product_name, product_code, product_price, product_stock, brand_name FROM product as p right join brand as b on p.product_brand_name = b.brand_name;"
     cur.execute(sql)
     res = cur.fetchall()
     conn.commit()
@@ -132,9 +132,9 @@ def proS_Out():
 def proS_manage():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "SELECT brand_name as '브랜드명', p.product_code as '상품코드', p.product_name as '제품명', p.product_stock as '현재 수량' FROM brand, product as p right join sales as s on p.product_code = s.pro_num"
+    sql = "SELECT brand_name, p.product_code, p.product_name, p.product_stock FROM brand, product as p right join sales as s on p.product_code = s.pro_num"
     cur.execute(sql)
-    res = cur.fetchone()
+    res = cur.fetchall()
     conn.commit()
     conn.close()
     return res
@@ -143,31 +143,27 @@ def proS_manage():
 def now_proS():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "UPDATE Product, sales, product_s set product_stock=if(isnull(product_stock)!=0,sales_count,product_stock + sales_count), sales_count=0, pro_Stat=if(pro_stat='입고','입고종료',if(pro_stat='출고','출고종료',NULL)) Where product_code=pro_num and (pro_Stat='출고' or pro_stat='입고') ;"
+    sql = "SET SQL_SAFE_UPDATES = 0; UPDATE Product, sales, product_s set product_stock=if(isnull(product_stock)!=0,sales_count,product_stock + sales_count), sales_count=0, pro_Stat=if(pro_stat='입고','입고종료',if(pro_stat='출고','출고종료',NULL)) Where product_code=pro_num and (pro_Stat='출고' or pro_stat='입고') ;"
     cur.execute(sql)
-    proSList = []
-    for row in cur:
-        proSList.append(row)
     conn.commit()
     conn.close()
-    return proSList
+
+# ############################################## 재무 관리 ###############################################
+# def fin_manage():
+#     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+#     cur = conn.cursor()
+#     sql = "SELECT brand_name as '브랜드' , sum(product_price*pro_sum) as '총판매가격',sum(product_price*pro_sum)/10*(100-br_comm+pr_comm) as '실 수익', sum(product_price*pro_sum)/10*pr_comm as '수수료',sum(product_price*pro_sum)/10*br_comm as '브랜드 수익', brand_kind_num as '브랜드 품목 종류 갯수', if(brand_name=charge_br,sta_name,NULL) as '담당자' from product, product_s, brand, commission, staff"
+#     cur.execute(sql)
+#     res = cur.fetchall()
+#     conn.commit()
+#     conn.close()
+#     return res
 
 ############################################## 재무 관리 ###############################################
 def fin_manage():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "SELECT brand_name as '브랜드' , sum(product_price*pro_sum) as '총판매가격',sum(product_price*pro_sum)/10*(100-br_comm+pr_comm) as '실 수익', sum(product_price*pro_sum)/10*pr_comm as '수수료',sum(product_price*pro_sum)/10*br_comm as '브랜드 수익', brand_kind_num as '브랜드 품목 종류 갯수', if(brand_name=charge_br,sta_name,NULL) as '담당자' from product, product_s, brand, commission, staff order by '총판매가격' desc"
-    cur.execute(sql)
-    res = cur.fetchall()
-    conn.commit()
-    conn.close()
-    return res
-
-############################################## 재무 관리 ###############################################
-def fin_manage():
-    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
-    cur = conn.cursor()
-    sql = "SELECT brand_name as '브랜드' , sum(product_price*pro_sum) as '총판매가격',sum(product_price*pro_sum)/10*1.5 as '실 수익', sum(product_price*pro_sum)/10 as '수수료',sum(product_price*pro_sum)/10*3 as '브랜드 수익', brand_kind_num as '브랜드 품목 종류 갯수', if(brand_name=charge_br,sta_name,NULL) as '담당자' from product, product_s, brand, staff order by '총판매가격' desc"
+    sql = "SELECT brand_name, sum(product_price*pro_sum),sum(product_price*pro_sum)/10*1.5, sum(product_price*pro_sum)/10,sum(product_price*pro_sum)/10*3, brand_kind_num, if(brand_name=charge_br,sta_name,NULL) from product, product_s, brand, staff group by erp_sys.staff.charge_br, erp_sys.brand.brand_name order by '총판매가격' desc"
     cur.execute(sql)
     res = cur.fetchall()
     conn.commit()
@@ -189,7 +185,7 @@ def sta_upd():
 def insert_prod(query):
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "INSERT into PRODUCT (product_code,product_name,product_brand_name,product_price,product_stock) VALUES (%s,%s,%s,%d,%d);"
+    sql = "INSERT into PRODUCT (product_code,product_name,product_brand_name,product_price,product_stock) VALUES (%s,%s,%s,%s,%s);"
     cur.execute(sql, query)
     conn.commit()
     conn.close()
@@ -198,7 +194,7 @@ def insert_prod(query):
 def pro_view():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "SELECT * FROM PRODUCT;"
+    sql = "SELECT * FROM PRODUCT as p right join brand as b on p.product_brand_name = b.brand_name;"
     cur.execute(sql)
     res = cur.fetchall()
     conn.commit()
@@ -233,7 +229,7 @@ def insert_comm(query):
     conn.close()
 
 ############################################## 브랜드 등록 ###############################################
-def insert_comm(query):
+def insert_br(query):
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
     sql = "INSERT into brand(brand_name,brand_account,brand_tel)VALUES (%s,%s,%s);"

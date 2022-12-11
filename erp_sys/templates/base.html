@@ -47,6 +47,41 @@
         });
       }
 
+      function prosmanage() {
+        var ajax = $.ajax({
+          url: "/prosmanage",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              //alert(response.res.length);
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
       function finance() {
         var ajax = $.ajax({
           url: "/finance",
@@ -76,9 +111,6 @@
                     "</td>" +
                     "<td>" +
                     response.res[i][6] +
-                    "</td>" +
-                    "<td>" +
-                    response.res[i][7] +
                     "</td></tr>"
                 );
               }
@@ -93,14 +125,29 @@
         });
       }
 
+      function loadf() {
+        let title = sessionStorage.getItem("pro");
+        if (title == "s1") {
+          product();
+        }
+      }
+
       function product() {
+        sessionStorage.setItem("pro", "s1");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").show();
+        $("#5th").show();
         var ajax = $.ajax({
           url: "/product",
           type: "GET",
           success: function (response) {
-            //alert(response.res.length);
             if (response.message == "SUCCESS") {
               $("#table").empty();
+              $("#table").append(
+                "<th>test</th><th>test</th><th>test</th><th>test</th><th>test</th>"
+              );
               for (let i = 0; i < response.res.length; i++) {
                 $("#table").append(
                   "<tr><td>" +
@@ -124,6 +171,7 @@
               $("#table").css("border", "2px solid rgb(9, 105, 127)");
               $("#table").css("border-collapse", "collapse");
               $("td").css("border", "2px solid rgb(9, 105, 127)");
+              $("th").css("border", "2px solid rgb(9, 105, 127)");
             } else {
               $("#mainContent").append("<li> 실패 </li>");
             }
@@ -230,6 +278,45 @@
         });
       }
 
+      function prosview() {
+        var ajax = $.ajax({
+          url: "/clients",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append();
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+              $("#table").css("width", "100%");
+              $("#table").css("border", "2px solid rgb(9, 105, 127)");
+              $("#table").css("border-collapse", "collapse");
+              $("td").css("border", "2px solid rgb(9, 105, 127)");
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
       function clients() {
         var ajax = $.ajax({
           url: "/clients",
@@ -267,10 +354,44 @@
           },
         });
       }
+
+      function sub_click1() {
+        let one = $("#1st").val();
+        let two = $("#2nd").val();
+        let thr = $("#3rd").val();
+        let fou = $("#4th").val();
+        let fiv = $("#5th").val();
+        let param = {
+          product_code: one,
+          product_name: two,
+          product_brand_name: thr,
+          product_price: fou,
+          product_stock: fiv,
+        };
+        var ajax = $.ajax({
+          url: "/proins",
+          headers: { "Content-Type": "application/json" },
+          data: JSON.stringify(param),
+          //  one: "product_code",
+          //  product_name: two,
+          //  product_brand_name: thr,
+          //  product_price: fou,
+          //  product_stock: fiv,
+          type: "POST",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+            } else {
+              $("#subContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+        $("#pro").click();
+      }
     </script>
   </head>
 
-  <body>
+  <body onload="loadf()">
     <div class="container">
       <div class="imgDiv">
         <img
@@ -310,7 +431,7 @@
           <span>반품 관리</span>
           <span>반품 관리</span>
         </a>
-        <a href="#none">
+        <a onclick="prosmanage()" id="pros_man">
           <span>재고 관리</span>
           <span>재고 관리</span>
         </a>
@@ -331,7 +452,17 @@
         <div id="mainContent">
           <table id="table"></table>
         </div>
-        <div id="subContent"></div>
+        <div id="subContent">
+          <table id="table1"></table>
+          <form>
+            <input type="search" name="product_code" id="1st" />
+            <input type="search" name="product_name" id="2nd" />
+            <input type="search" name="product_brand_name" id="3rd" />
+            <input type="search" name="product_price" id="4th" />
+            <input type="search" name="product_stock" id="5th" />
+            <input type="submit" onclick="sub_click1()" />
+          </form>
+        </div>
       </div>
     </div>
   </body>
