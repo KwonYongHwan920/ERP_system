@@ -40,7 +40,6 @@ def tbList(request):
 @method_decorator(csrf_exempt,name='dispatch')
 def pro_ins(request):
     if (request.method == 'POST'):
-        print('test')
         
         data = json.loads(request.body)
         code = data["product_code"]
@@ -203,12 +202,11 @@ def br_ins(request):
         data = json.loads(request.body)
         
         name = data["brand_name"]
-        num = data["brand_kind_num"]
         acc = data["brand_account"]
         tel = data["brand_tel"]
 
         try:
-            query = (name, num, acc, tel)
+            query = (name, acc, tel)
             res = models.insert_br(query)
             # res = models.pro_view()
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
@@ -353,6 +351,25 @@ def del_client(request):
         try:
             query = (num)
             res = models.del_client(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 상품 수정 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def upd_prod(request):
+    if (request.method == 'PUT'):
+        
+        data = json.loads(request.body)
+        code = data["product_code"]
+        name = data["product_name"]
+        brand = data["product_brand_name"]
+        price = data["product_price"]
+        stock = data["product_stock"]
+    
+        try:
+            res = models.upd_prod(code, name, brand, price, stock)
             # res = models.pro_view()
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
         except: return JsonResponse({'message':'DB_ERR'},status=400)

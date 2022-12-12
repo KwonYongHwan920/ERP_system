@@ -32,4 +32,5 @@ path('del_brand', views.del_brand),
 path('del_staff', views.del_staff),
 path('del_client', views.del_client),
 path('del_sales', views.del_sales),
+path('upd_prod', views.upd_prod),
 ]

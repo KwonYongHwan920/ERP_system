@@ -363,3 +363,28 @@ def del_client(query):
     cur.execute(sql, query)
     conn.commit()
     conn.close()
+    
+############################################# 상품 수정 ###############################################
+def upd_prod(code, name, brand, price, stock):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "SET SQL_SAFE_UPDATES = 0;"
+    cur.execute(sql)
+    sql = "SET foreign_key_checks = 0;"
+    cur.execute(sql)
+    sql = f"UPDATE PRODUCT SET product_name = '{name}', product_brand_name = '{brand}' , product_price = '{price}', product_stock = '{stock}' WHERE  product_code = '{code}';"
+    cur.execute(sql)
+    sql = "SET foreign_key_checks = 1;"
+    cur.execute(sql)
+    conn.commit()
+    conn.close()
+    
+# ############################################## 상품 수정 ###############################################
+# def upd_prod(code, name, brand, price, stock):
+#     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+#     cur = conn.cursor()
+#     sql = f"INSERT INTO PRODUCT VALUES ('{code}', '{name}', '{brand}', '{price}', '{stock}') ON DUPLICATE KEY UPDATE product_name = '{name}', product_brand_name = '{brand}', product_price = '{price}', product_stock = '{stock}';"
+#     print(sql)
+#     cur.execute(sql)
+#     conn.commit()
+#     conn.close()
