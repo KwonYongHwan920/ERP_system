@@ -163,7 +163,7 @@ def now_proS():
 def fin_manage():
     conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
     cur = conn.cursor()
-    sql = "SELECT brand_name, sum(product_price*pro_sum),sum(product_price*pro_sum)/10*1.5, sum(product_price*pro_sum)/10,sum(product_price*pro_sum)/10*3, brand_kind_num, if(brand_name=charge_br,sta_name,NULL) from product, product_s, brand, staff group by erp_sys.staff.charge_br, erp_sys.brand.brand_name order by '총판매가격' desc"
+    sql = "SELECT brand_name, sum(product_price*pro_sum),sum(product_price*pro_sum)/10*1.5, sum(product_price*pro_sum)/10,sum(product_price*pro_sum)/10*3, if(brand_name=charge_br,sta_name,NULL) from product, product_s, brand, staff group by erp_sys.staff.charge_br, erp_sys.brand.brand_name order by '총판매가격' desc"
     cur.execute(sql)
     res = cur.fetchall()
     conn.commit()
@@ -298,3 +298,68 @@ def clients_view():
     conn.commit()
     conn.close()
     return res
+
+############################################## 브랜드 현황 ###############################################
+def brand_view():
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "SELECT brand_name, brand_account, brand_tel FROM BRAND;"
+    cur.execute(sql)
+    res = cur.fetchall()
+    conn.commit()
+    conn.close()
+    return res
+
+############################################## 상품 삭제 ###############################################
+def del_prod(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "DELETE FROM PRODUCT WHERE product_code = %s;"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+    
+############################################## 반품 삭제 ###############################################
+def del_tb(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "DELETE FROM take_back WHERE tb_code = %s;"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+    
+############################################## 브랜드 삭제 ###############################################
+def del_brand(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "DELETE FROM brand WHERE brand_name = %s;"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+    
+############################################## 발주 삭제 ###############################################
+def del_sales(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "DELETE FROM sales WHERE pro_num = %s;"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+
+############################################## 인사 삭제 ###############################################
+def del_staff(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "DELETE FROM staff WHERE charge_br = %s;"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()
+    
+############################################## 고객 삭제 ###############################################
+def del_client(query):
+    conn = pymysql.connect(host='127.0.0.1', user='root', password='dydghks5210', db='erp_sys', charset='utf8')
+    cur = conn.cursor()
+    sql = "DELETE FROM clients WHERE clients_num = %s;"
+    cur.execute(sql, query)
+    conn.commit()
+    conn.close()

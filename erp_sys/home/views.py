@@ -126,6 +126,16 @@ def clients_view(request):
         return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
     except: return JsonResponse({'message':'DB_ERR'},status=400)
     
+################################################ 브랜드 현황 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def brand_view(request):
+    try:
+        res = models.brand_view()
+        # print(res)
+        return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+    except: return JsonResponse({'message':'DB_ERR'},status=400)
+    
 ################################################ 입출고 추가 ##################################################
 
 @method_decorator(csrf_exempt,name='dispatch')
@@ -216,10 +226,9 @@ def staff_ins(request):
         pay = data["Sta_pay"]
         att = data["Sta_Att"]
         name = data["Sta_name"]
-        stat = data["Sta_Stat"]
 
         try:
-            query = (char, pay, att, name, stat)
+            query = (char, pay, att, name)
             res = models.insert_staff(query)
             # res = models.pro_view()
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
@@ -242,6 +251,108 @@ def client_ins(request):
         try:
             query = (num, name, add, tel, note)
             res = models.insert_client(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 상품 삭제 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def del_prod(request):
+    if (request.method == 'DELETE'):
+        
+        data = json.loads(request.body)
+        
+        code = data["product_code"]
+
+        try:
+            query = (code)
+            res = models.del_prod(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 반품 삭제 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def del_tb(request):
+    if (request.method == 'DELETE'):
+        
+        data = json.loads(request.body)
+        
+        code = data["tb_code"]
+
+        try:
+            query = (code)
+            res = models.del_tb(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 브랜드 삭제 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def del_brand(request):
+    if (request.method == 'DELETE'):
+        
+        data = json.loads(request.body)
+        
+        name = data["brand_name"]
+
+        try:
+            query = (name)
+            res = models.del_brand(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 발주 삭제 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def del_sales(request):
+    if (request.method == 'DELETE'):
+        
+        data = json.loads(request.body)
+        
+        num = data["pro_num"]
+
+        try:
+            query = (num)
+            res = models.del_sales(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 인사 삭제 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def del_staff(request):
+    if (request.method == 'DELETE'):
+        
+        data = json.loads(request.body)
+        
+        name = data["charge_br"]
+
+        try:
+            query = (name)
+            res = models.del_staff(query)
+            # res = models.pro_view()
+            return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
+        except: return JsonResponse({'message':'DB_ERR'},status=400)
+        
+################################################ 고객 삭제 ##################################################
+
+@method_decorator(csrf_exempt,name='dispatch')
+def del_client(request):
+    if (request.method == 'DELETE'):
+        
+        data = json.loads(request.body)
+        
+        num = data["clients_num"]
+
+        try:
+            query = (num)
+            res = models.del_client(query)
             # res = models.pro_view()
             return JsonResponse({'message': 'SUCCESS','res':res}, status=200)
         except: return JsonResponse({'message':'DB_ERR'},status=400)
