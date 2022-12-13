@@ -663,6 +663,25 @@
                 }
               },
             });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_tb",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
           }
           $("#tbList").click();
         } else if (db == 4) {
@@ -710,7 +729,27 @@
                 }
               },
             });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_sales",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
           }
+
           $("#sales").click();
         } else if (db == 6) {
           let param = {
@@ -738,7 +777,27 @@
                 }
               },
             });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_staff",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
           }
+
           $("#staff").click();
         } else if (db == 7) {
           let param = {
@@ -767,7 +826,27 @@
                 }
               },
             });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_client",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
           }
+
           $("#clients").click();
         } else if (db == 8) {
           let param = {
@@ -794,7 +873,27 @@
                 }
               },
             });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_brand",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
           }
+
           $("#brand").click();
         }
       }
