@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,9 +12,895 @@
     <link rel="stylesheet" href="{% static '/css/login.css' %}" />
     <link rel="stylesheet" href="{% static '/css/content.css' %}" />
     <link rel="stylesheet" href="{% static '/css/grid.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/table.css' %}" />
+    <script type="text/javascript">
+      let db = 0;
+      function tbList() {
+        db = 3;
+        sessionStorage.setItem("pro", "s2");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").show();
+        $("#5th").hide();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/tbList",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "상품코드" +
+                  "</th>" +
+                  "<th>" +
+                  "상품명" +
+                  "</th>" +
+                  "<th>" +
+                  "상품수량" +
+                  "</th>" +
+                  "<th>" +
+                  "반품상태" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function brand() {
+        db = 8;
+        sessionStorage.setItem("pro", "s3");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").hide();
+        $("#5th").hide();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/brand_view",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "브랜드명" +
+                  "</th>" +
+                  "<th>" +
+                  "브랜드주소" +
+                  "</th>" +
+                  "<th>" +
+                  "전화번호" +
+                  "</th></tr>"
+              );
+              //alert(response.res.length);
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function finance() {
+        sessionStorage.setItem("pro", "s4");
+        $("#1st").hide();
+        $("#2nd").hide();
+        $("#3rd").hide();
+        $("#4th").hide();
+        $("#5th").hide();
+        $("#bta").hide();
+        $("#btb").hide();
+        $("#btc").hide();
+        var ajax = $.ajax({
+          url: "/finance",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "브랜드명" +
+                  "</th>" +
+                  "<th>" +
+                  "총판매가격" +
+                  "</th>" +
+                  "<th>" +
+                  "실수익" +
+                  "</th>" +
+                  "<th>" +
+                  "의류수수료" +
+                  "</th>" +
+                  "<th>" +
+                  "브랜드수익" +
+                  "</th>" +
+                  "<th>" +
+                  "담당자" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][5] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function loadf() {
+        let title = sessionStorage.getItem("pro");
+        if (title == "s1") {
+          product();
+        }
+        if (title == "s2") {
+          tbList();
+        }
+        if (title == "s3") {
+          brand();
+        }
+        if (title == "s4") {
+          finance();
+        }
+        if (title == "s5") {
+          productS();
+        }
+        if (title == "s6") {
+          sales();
+        }
+        if (title == "s7") {
+          staff();
+        }
+        if (title == "s8") {
+          clients();
+        }
+      }
+
+      function product() {
+        db = 1;
+        sessionStorage.setItem("pro", "s1");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").show();
+        $("#5th").show();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/product",
+          type: "GET",
+          success: function (response) {
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "상품코드" +
+                  "</th>" +
+                  "<th>" +
+                  "상품정보" +
+                  "</th>" +
+                  "<th>" +
+                  "브랜드명" +
+                  "</th>" +
+                  "<th>" +
+                  "상품가격" +
+                  "</th>" +
+                  "<th>" +
+                  "재고수량" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function productS() {
+        db = 2;
+        sessionStorage.setItem("pro", "s5");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").hide();
+        $("#5th").hide();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/product_s",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "상품코드" +
+                  "</th>" +
+                  "<th>" +
+                  "입출고상태" +
+                  "</th>" +
+                  "<th>" +
+                  "총 수량" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function sales() {
+        db = 5;
+        sessionStorage.setItem("pro", "s6");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").hide();
+        $("#4th").hide();
+        $("#5th").hide();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/sales",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "상품 코드" +
+                  "</th>" +
+                  "<th>" +
+                  "발주 수량" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function staff() {
+        db = 6;
+        sessionStorage.setItem("pro", "s7");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").show();
+        $("#5th").hide();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/staff",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "관리 브랜드" +
+                  "</th>" +
+                  "<th>" +
+                  "월급" +
+                  "</th>" +
+                  "<th>" +
+                  "출근횟수" +
+                  "</th>" +
+                  "<th>" +
+                  "직원이름" +
+                  "</th>" +
+                  "<th>" +
+                  "출근상태" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function prosview() {
+        var ajax = $.ajax({
+          url: "/clients",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "고객코드" +
+                  "</th>" +
+                  "<th>" +
+                  "고객명" +
+                  "</th>" +
+                  "<th>" +
+                  "주소" +
+                  "</th>" +
+                  "<th>" +
+                  "전화번호" +
+                  "</th>" +
+                  "<th>" +
+                  "불만사항" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function clients() {
+        db = 7;
+        sessionStorage.setItem("pro", "s8");
+        $("#1st").show();
+        $("#2nd").show();
+        $("#3rd").show();
+        $("#4th").show();
+        $("#5th").show();
+        $("#bta").show();
+        $("#btb").show();
+        $("#btc").show();
+        var ajax = $.ajax({
+          url: "/clients",
+          type: "GET",
+          success: function (response) {
+            //alert(response.res.length);
+            if (response.message == "SUCCESS") {
+              $("#table").empty();
+              $("#table").append(
+                "<tr><th>" +
+                  "고객코드" +
+                  "</th>" +
+                  "<th>" +
+                  "고객명" +
+                  "</th>" +
+                  "<th>" +
+                  "주소" +
+                  "</th>" +
+                  "<th>" +
+                  "전화번호" +
+                  "</th>" +
+                  "<th>" +
+                  "불만사항" +
+                  "</th></tr>"
+              );
+              for (let i = 0; i < response.res.length; i++) {
+                $("#table").append(
+                  "<tr><td>" +
+                    response.res[i][0] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][1] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][2] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][3] +
+                    "</td>" +
+                    "<td>" +
+                    response.res[i][4] +
+                    "</td></tr>"
+                );
+              }
+            } else {
+              $("#mainContent").append("<li> 실패 </li>");
+            }
+          },
+        });
+      }
+
+      function sub_click1(str) {
+        let one = $("#1st").val();
+        let two = $("#2nd").val();
+        let thr = $("#3rd").val();
+        let fou = $("#4th").val();
+        let fiv = $("#5th").val();
+        if (db == 1) {
+          let param = {
+            product_code: one,
+            product_name: two,
+            product_brand_name: thr,
+            product_price: fou,
+            product_stock: fiv,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/proins",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "update") {
+            var ajax = $.ajax({
+              url: "/upd_prod",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "PUT",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_prod",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+
+          $("#pro").click();
+        } else if (db == 2) {
+          let param = {
+            pro_code: one,
+            pro_Stat: two,
+            pro_sum: thr,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/proSins",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+          $("#proS").click();
+        } else if (db == 3) {
+          let param = {
+            tb_code: one,
+            tb_name: two,
+            tb_stock: thr,
+            tb_stat: fou,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/tb_ins",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_tb",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+          $("#tbList").click();
+        } else if (db == 4) {
+          //* 쿼리만 돌리기용 버튼
+          var ajax = $.ajax({
+            url: "/proins",
+            headers: { "Content-Type": "application/json" },
+            data: JSON.stringify(param),
+            //  one: "product_code",
+            //  product_name: two,
+            //  product_brand_name: thr,
+            //  product_price: fou,
+            //  product_stock: fiv,
+            type: "POST",
+            success: function (response) {
+              //alert(response.res.length);
+              if (response.message == "SUCCESS") {
+              } else {
+                $("#subContent").append("<li> 실패 </li>");
+              }
+            },
+          });
+          $("#pros_man").click();
+        } else if (db == 5) {
+          let param = {
+            pro_num: one,
+            sales_count: two,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/sales_ins", //* 만들어야됨
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_sales",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+
+          $("#sales").click();
+        } else if (db == 6) {
+          let param = {
+            charge_br: one,
+            Sta_pay: two,
+            Sta_Att: thr,
+            Sta_name: fou,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/staff_ins",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_staff",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+
+          $("#staff").click();
+        } else if (db == 7) {
+          let param = {
+            clients_num: one,
+            clients_name: two,
+            clients_add: thr,
+            clients_tel: fou,
+            clients_note: fiv,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/client_ins",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_client",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+
+          $("#clients").click();
+        } else if (db == 8) {
+          let param = {
+            brand_name: one,
+            brand_account: two,
+            brand_tel: thr,
+          };
+          if (str == "insert") {
+            var ajax = $.ajax({
+              url: "/br_ins",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "POST",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          } else if (str == "delete") {
+            var ajax = $.ajax({
+              url: "/del_brand",
+              headers: { "Content-Type": "application/json" },
+              data: JSON.stringify(param),
+              //  one: "product_code",
+              //  product_name: two,
+              //  product_brand_name: thr,
+              //  product_price: fou,
+              //  product_stock: fiv,
+              type: "DELETE",
+              success: function (response) {
+                //alert(response.res.length);
+                if (response.message == "SUCCESS") {
+                } else {
+                  $("#subContent").append("<li> 실패 </li>");
+                }
+              },
+            });
+          }
+
+          $("#brand").click();
+        }
+      }
+    </script>
   </head>
 
-  <body>
+  <body onload="loadf()">
     <div class="container">
       <div class="imgDiv">
         <img
@@ -37,42 +924,71 @@
         </form>
       </div>
       <div class="gnb">
-        <a href="#none">
-          <span>재무</span>
-          <span>재무</span>
+        <a onclick="finance()" id="fin">
+          <span>재무 관리</span>
+          <span>재무 관리</span>
         </a>
-        <a href="#none">
-          <span>HR 관리</span>
-          <span>HR 관리</span>
+        <a onclick="product()" id="pro">
+          <span>상품 관리</span>
+          <span>상품 관리</span>
         </a>
-        <a href="#none">
-          <span>소싱/조달</span>
-          <span>소싱/조달</span>
+        <a onclick="productS()" id="proS">
+          <span>입출고 관리</span>
+          <span>입출고 관리</span>
         </a>
-        <a href="#none">
-          <span>판매</span>
-          <span>판매</span>
+        <a onclick="tbList()" id="tbList">
+          <span>반품 관리</span>
+          <span>반품 관리</span>
         </a>
-        <a href="#none">
-          <span>제조</span>
-          <span>제조</span>
+        <a onclick="brand()" id="brand">
+          <span>브랜드 관리</span>
+          <span>브랜드 관리</span>
         </a>
-        <a href="#none">
-          <span>R&D</span>
-          <span>R&D</span>
+        <a onclick="sales()" id="sales">
+          <span>발주 관리</span>
+          <span>발주 관리</span>
         </a>
-        <a href="#none">
-          <span>서비스</span>
-          <span>서비스</span>
+        <a onclick="staff()" id="staff">
+          <span>인사 관리</span>
+          <span>인사 관리</span>
         </a>
-        <a href="#none">
-          <span>자산관리</span>
-          <span>자산관리</span>
+        <a onclick="clients()" id="clients">
+          <span>고객 관리</span>
+          <span>고객 관리</span>
         </a>
       </div>
       <div class="content">
-        <div id="mainContent"></div>
-        <div id="subContent"></div>
+        <div id="mainContent" style="overflow-y: scroll">
+          <table id="table" border="0" cellspacing="0" cellpadding="0"></table>
+        </div>
+        <div id="subContent">
+          <table id="table1"></table>
+          <form>
+            <input type="search" name="product_code" id="1st" />
+            <input type="search" name="product_name" id="2nd" />
+            <input type="search" name="product_brand_name" id="3rd" />
+            <input type="search" name="product_price" id="4th" />
+            <input type="search" name="product_stock" id="5th" />
+            <input
+              type="submit"
+              value="등록"
+              onclick='sub_click1("insert")'
+              id="bta"
+            />
+            <input
+              type="submit"
+              value="수정"
+              onclick='sub_click1("update")'
+              id="btb"
+            />
+            <input
+              type="submit"
+              value="삭제"
+              onclick='sub_click1("delete")'
+              id="btc"
+            />
+          </form>
+        </div>
       </div>
     </div>
   </body>
